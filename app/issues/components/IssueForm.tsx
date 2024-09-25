@@ -34,6 +34,7 @@ const IssueForm: React.FC = ({ issue }: { issue?: Issue }) => {
       await axios.post("/api/issues", data);
       setIsSubmiting(true);
       router.push("/issues");
+      router.refresh();
     } catch (error) {
       setIsSubmiting(false);
       setError("An unexpected error occurred");
