@@ -29,6 +29,8 @@ const IssueForm: React.FC = ({ issue }: { issue?: Issue }) => {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
+      if(issue) await axios.patch("/api/issues/"+issue.id,data)
+        else
       await axios.post("/api/issues", data);
       setIsSubmiting(true);
       router.push("/issues");
@@ -62,7 +64,7 @@ const IssueForm: React.FC = ({ issue }: { issue?: Issue }) => {
         />
         <ErrorMessage>{errors.description?.message}</ErrorMessage>
         <Button disabled={isSubmiting}>
-          Submit New Issue{isSubmiting && <Spinner />}
+         {issue ? "Update Issue":"Submit New Issue"} {isSubmiting && <Spinner />}
         </Button>
       </form>
     </div>
