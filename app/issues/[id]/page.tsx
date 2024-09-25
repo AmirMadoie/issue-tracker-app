@@ -3,7 +3,7 @@ import prisma from "@/prisma/client";
 import { Heading, Text, Flex, Card, Grid, Box, Button } from "@radix-ui/themes";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
-import delay from "delay";
+import Link from "next/link";
 
 interface Props {
   params: { id: string };
@@ -13,10 +13,9 @@ const IssueDetailPage: React.FC<Props> = async ({ params: { id } }) => {
   const issue = await prisma.issue.findUnique({
     where: { id: parseInt(id) },
   });
-  await delay(2000);
-
+  
   if (!issue) notFound();
-
+  
   return (
     <Grid columns={{initial:"1",md:"2"}} gap="5">
       <Box>
@@ -30,7 +29,7 @@ const IssueDetailPage: React.FC<Props> = async ({ params: { id } }) => {
         </Card>
       </Box>
       <Box>
-        <Button>Edit Issue</Button>
+        <Button><Link href={`/issues/${issue.id}/edit`}>Edit Issue</Link></Button>
       </Box>
     </Grid>
   );
