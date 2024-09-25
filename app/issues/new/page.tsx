@@ -2,7 +2,7 @@
 import ErrorMessage from "@/app/components/ErrorMessage";
 import { createIssueSchema } from "@/app/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Callout, TextField } from "@radix-ui/themes";
+import { Button, Callout, Spinner, TextField } from "@radix-ui/themes";
 import axios from "axios";
 import "easymde/dist/easymde.min.css";
 import { useRouter } from "next/navigation";
@@ -24,6 +24,7 @@ const NewIssuePage: React.FC = () => {
     resolver: zodResolver(createIssueSchema),
   });
   const [error, setError] = useState("");
+  const [isSubmiting, setIsSubmiting] = useState(false);
   return (
     <div className="max-w-xl">
       {error && (
@@ -36,8 +37,10 @@ const NewIssuePage: React.FC = () => {
         onSubmit={handleSubmit(async (data) => {
           try {
             await axios.post("/api/issues", data);
+            setIsSubmiting(true)
             router.push("/issues");
-          } catch (error) {
+          } catch (error) {            
+            setIsSubmiting(false)
             setError("An unexpected error occurred");
           }
         })}
@@ -52,7 +55,7 @@ const NewIssuePage: React.FC = () => {
           )}
         />
        <ErrorMessage>{errors.description?.message}</ErrorMessage> 
-        <Button>Submit New Issue</Button>
+        <Button disabled={isSubmiting}>Submit New Issue{isSubmiting && <Spinner />}</Button>
       </form>
     </div>
   );
