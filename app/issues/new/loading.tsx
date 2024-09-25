@@ -1,6 +1,6 @@
 import React from 'react'
 
-const LoadingIssueDetailPage = () => {
+const LoadingIssueDetailPage:React.FC = () => {
   return (
     <div>Loading...</div>
   )
