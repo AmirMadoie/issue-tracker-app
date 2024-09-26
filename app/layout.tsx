@@ -24,10 +24,8 @@ export default function RootLayout({
         <Theme accentColor="violet" radius="large">
           <NavBar />
           <main className="p-5">
-            <Container>
-{children}
-            </Container>
-            </main>
+            <Container>{children}</Container>
+          </main>
         </Theme>
       </body>
     </html>
